@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>React.createElement</title>
+    <style>
+      .root2 { color: orange;}
+      #root3 { color: red; font-style: italic}
+      #root5 { color: blue; font-style: italic}
+      .abc { color: green; text-align: center}
+      .abc1 { color: purple; text-align: center}
+    </style>
+</head>
+<body>
+
+      <div id="root1"></div>
+      <div id="root2"></div>
+      <div id="root3"></div>
+      <div id="root4"></div>
+      <div id="root5"></div>
+      <div id="root6"></div>
+      <div id="root7"></div>
+      <div id="root8"></div>
+
+    <script src="js/vendor/react/react@16.14.dev.js"></script>
+    <script src="js/vendor/react/react-dom@16.14.dev.js"></script>
+    <script src="js/vendor/babel.min.js"></script>
+
+    <script>
+        // createElement(요소,속성,내용,자식요소)로 만들 수 있다.
+        // render(대상요소, DOM요소) 대상요소를 DOM요소에 접한한다 생각하면됨
+
+        ReactDOM.render(
+                React.createElement('h1', null, 'Hello World!!'),   // <h1>Hello World!!</h1> 이렇게 작성된것과 같다
+                document.querySelector('#root1')
+        );
+
+        ReactDOM.render(
+                React.createElement('h1', {class:'root2'}, 'Hello World!!'),   // <h1 class='root2'>Hello World!!</h1> 이렇게 작성된것과 같다
+                document.querySelector('#root2')
+        );
+
+        ReactDOM.render(
+                React.createElement('h2', {id:'root3'},
+                    React.createElement('span',null,'Hello'),'World!!'),   // <h2 id='root3'><span>Hello</span> World!!</h2> 이렇게 작성된것과 같다
+                document.querySelector('#root3')
+        );
+
+        ReactDOM.render(
+                React.createElement('h2', null,
+                        React.createElement('em',null,
+                                React.createElement('span',null,'Hello'),' Wonderful'),' World!!'),   // <h2><span>Hello</span>, <em>Wonderful</em> World!!</h2> 이렇게 작성된것과 같다
+                document.querySelector('#root4')
+        );  // -> 요거는 헬로우랑 원더풀이 em이 적용된체로 나오고
+        ReactDOM.render(
+                React.createElement('h2', null,
+                        React.createElement('span',null,' Hello',
+                                React.createElement('em',null,'Wonderful')),' World!!'),   // <h2><span>Hello</span>, <em>Wonderful</em> World!!</h2> 이렇게 작성된것과 같다
+                document.querySelector('#root5')
+        );  // 이렇게 작성해야 원더풀에만 em이 적용됨
+
+        ReactDOM.render(
+                React.createElement('h3', {className:'abc',onClick:alert("Hello,Again~!!")}, 'Hello, Another World!!'),
+          // <h3 class='abc' style='text-align:center' onclick='alert('Hello,Again~!!')'>Hello, Another World!!</h3> 이렇게 작성된것과 같다
+                document.querySelector('#root6')
+        ); // 속성들은 속성:속성값으로 들어와야한다. 그리고 이건 웹페이지를 열때 알람이 뜬다 그리고 클래스에 css를 연결해서 작성했음
+
+        ReactDOM.render(
+                React.createElement('h3', {className:'abc1',style:{textAlign:'center'},onClick:()=>{alert("Hello,Again~!!")}}, 'Hello, Another World!!'),
+                // <h3 class='abc' style='text-align:center' onclick='alert('Hello,Again~!!')'>Hello, Another World!!</h3> 이렇게 작성된것과 같다
+                document.querySelector('#root7')
+        ); // 이렇게 작성해야 클릭했을때 알람이 작동된다.
+    </script>
+</body>
+</html>
