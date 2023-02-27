@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>React Component</title>
+    <style>
+      .root2 {color: orange;}
+      #root3 {color: red; font-style: italic}
+      .abc1 {color: blue; font-weight: bold}
+    </style>
+</head>
+<body>
+
+      <div id="root1"></div>
+      <div id="root2"></div>
+      <div id="root3"></div>
+      <div id="root4"></div>
+      <div id="root5"></div>
+      <div id="root6"></div>
+      <div id="root7"></div>
+
+    <script src="js/vendor/react/react@16.14.dev.js"></script>
+    <script src="js/vendor/react/react-dom@16.14.dev.js"></script>
+    <script src="js/vendor/babel.min.js"></script>
+
+
+    <script type="text/babel">
+        // 클래스 기반 컴퍼넌트
+        // 자바스크립트 클래스로 리액트로 컴퍼넌트를 정의
+        // state 관리기능, life-cycle API를 사용할 수 있고,
+        // 컴퍼넌트를 구성하는 임의의 함수도 정의 가능
+        // 단, 반드시 render 함수를 포함해야 하고
+        // render 할 대상을 꼭 return 해야함
+        // 함수 컴퍼넌트에 비해 선언 방식이 다소 복잡
+
+
+        // 클래스 기반으로 작성할때가 더 귀찮음
+        // 특히 React.createElement으로 작성시 출력하는 구문을 작성할때
+        // React.createElement(클래스명)으로 작성해야되서 아주 거슬림
+        // 다시 한번 더 얘기하는거지만 카멜표기법 중요하다
+        //
+        class Hello1 extends React.Component {
+            render() {
+            return React.createElement('h1', null, 'Hello World!!');
+            }
+        }
+
+        class Hello2 extends React.Component{
+            render() {
+            return React.createElement('h2', null,
+                        React.createElement('span',null,' Hello',
+                            React.createElement('em',null,'Wonderful')),' World!!');
+            }
+        }
+
+        class Hello3 extends React.Component{
+            render() {
+                return React.createElement('h3', {className:'abc',style:{textAlign:'center'},onClick:()=>{alert("Hello,Again~!!")}}, 'Hello, Another World!!');}
+        }
+
+        class Hello4 extends React.Component{
+            render() {return <h1>Hello World!!</h1>}
+        }
+
+        class Hello5 extends React.Component{
+           render() {return <h3 className='abc' style={{textAlign:"center"}} onClick={()=>{alert('Hello,Again~!!')}}>Hello, Another World!!</h3>}
+        }
+
+        class Hello6 extends React.Component { // 함수 정의하듯 쓰면 된다는 점은 좋은듯하다
+            render() {
+                let myClass = 'root2'
+                const myText = () => 'World!';
+                return <p className={myClass}>
+                    <span> 10 * 10 = {10 * 10}</span>
+                    <br/>
+                    <span>Hello, my {myText()}</span>
+                </p>
+            }
+        }
+
+        class Hello7 extends React.Component {
+            render() {
+                let myClass = 'abc1'
+                const myText = (New) => {
+                    // 삼항 연산자를 사용하게되면 똑같이 return을 해야 작동한다
+                    // 그리고 출력하는곳에 boolean 선언이 되어야 한다.
+                    return New ? "New World" : 'My World';
+                    }
+                return <p className={myClass}>
+                    <span>Hello, {myText(true)}</span>
+                    <br/>
+                    <span>Hello, {myText(false)}</span>
+                </p>
+            }
+        }
+        // ----------------------------------------------------
+
+        ReactDOM.render(React.createElement(Hello1),document.querySelector('#root1'));
+
+        ReactDOM.render(React.createElement(Hello2),document.querySelector('#root2'));
+
+        ReactDOM.render(React.createElement(Hello3),document.querySelector('#root3'));
+
+        ReactDOM.render(<Hello4 />,document.querySelector('#root4'));
+
+        ReactDOM.render(<Hello5 />,document.querySelector('#root5'));
+
+        ReactDOM.render(<Hello6 />,document.querySelector('#root6'));
+
+        ReactDOM.render(<Hello7 />,document.querySelector('#root7'));
+    </script>
+</body>
+</html>
